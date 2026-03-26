@@ -16,6 +16,9 @@ class Produto extends GenericModel {
     #[ORM\Column(type: 'string')]
     private $descricao;
 
+    #[ORM\ManyToMany(targetEntity: Pedido::class, mappedBy: "produtosPedido")]
+    private $pedidosProduto;
+
     public function getNome()
     {
         return $this->nome;
@@ -44,6 +47,16 @@ class Produto extends GenericModel {
     public function setDescricao($descricao): void
     {
         $this->descricao = $descricao;
+    }
+
+    public function getPedidosProduto()
+    {
+        return $this->pedidosProduto;
+    }
+
+    public function setPedidosProduto($pedidosProduto): void
+    {
+        $this->pedidosProduto = $pedidosProduto;
     }
 
 }
