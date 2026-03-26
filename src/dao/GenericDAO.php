@@ -40,4 +40,25 @@ abstract class GenericDAO
         }
     }
 
+    public static function deletar(GenericModel $model){
+        try{
+            $em = Conexao::getEntityManager();
+            $em->beginTransaction();
+            $em->remove($model);
+            $em->flush();
+            $em->commit();
+        } catch (Exception $ex){
+            $em->rollback();
+            throw new Exception("Falha ao deletar os dados." . $ex->getMessage());
+        }
+    }
+
+
 }
+
+
+
+
+
+
+
