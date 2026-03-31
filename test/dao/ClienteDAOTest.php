@@ -52,4 +52,53 @@ class ClienteDAOTest extends TestCase
         $this->assertNotNull($clientes);
     }
 
+    public function testInserirClienteContato(){
+        $cliente = new Cliente();
+        $cliente->setNome("Matheus Gustmann");
+        $cliente->setCpf("123.456.789-00");
+        $cliente->setDataNascimento(new DateTime("2005-07-15"));
+
+        $contato1 = new Contato();
+        $contato1->setTelefone("(46)1234-5678");
+        $contato1->setEmail("teste@ifpr.edu.br");
+        $contato1->setCliente($cliente);
+
+        $contato2 = new Contato();
+        $contato2->setTelefone("(46)1234-5679");
+        $contato2->setEmail("teste@ifpr.edu.br");
+        $contato2->setCliente($cliente);
+
+        $contatos[] = $contato1;
+        $contatos[] = $contato2;
+
+        $cliente->setContatos($contatos);
+        $clienteInserido = ClienteDAO::salvar($cliente);
+
+        $this->assertNotNull($clienteInserido);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

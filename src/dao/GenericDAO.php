@@ -53,8 +53,24 @@ abstract class GenericDAO
         }
     }
 
-
+    public static function buscarId(GenericModel $model){
+        try{
+            $em = Conexao::getEntityManager();
+            $repository = $em->getRepository(static::$modelClass);
+            return $repository->find($model->getId());
+        } catch (Exception $ex){
+            throw new Exception("Falha ao buscar pelo ID." . $ex->getMessage());
+        }
+    }
 }
+
+
+
+
+
+
+
+
 
 
 
