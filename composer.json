@@ -3,10 +3,11 @@
     "autoload": {
         "psr-4": {
             "Eduardo\\ProjetoExemplo\\": "src/",
-            "test\\": "test/",
             "model\\": "src/model/",
             "dao\\": "src/dao/",
-            "utils\\": "src/utils/"
+            "controller\\": "src/controller/",
+            "utils\\": "src/utils/",
+            "test\\": "test/"
         }
     },
     "authors": [
@@ -19,7 +20,8 @@
         "doctrine/orm": "^3.6",
         "symfony/cache": "^7.4",
         "symfony/console": "^7.4",
-        "doctrine/dbal": "^4.4"
+        "doctrine/dbal": "^4.4",
+        "nikic/fast-route": "^1.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5"
