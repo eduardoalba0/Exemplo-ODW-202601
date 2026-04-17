@@ -1,4 +1,10 @@
 {
+    "config": {
+        "platform-check": false,
+        "platform": {
+            "php": "8.2.4"
+        }
+    },
     "name": "eduardo/projetoexemplo",
     "autoload": {
         "psr-4": {
@@ -6,7 +12,8 @@
             "test\\": "test/",
             "model\\": "src/model/",
             "dao\\": "src/dao/",
-            "utils\\": "src/utils/"
+            "utils\\": "src/utils/",
+            "controller\\": "src/controller/"
         }
     },
     "authors": [
@@ -19,7 +26,8 @@
         "doctrine/orm": "^3.6",
         "symfony/cache": "^7.4",
         "symfony/console": "^7.4",
-        "doctrine/dbal": "^4.4"
+        "doctrine/dbal": "^4.4",
+        "nikic/fast-route": "^1.3"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.5"
