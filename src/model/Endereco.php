@@ -16,7 +16,8 @@ class Endereco extends GenericModel {
     #[ORM\Column(type: 'string')]
     private $bairro;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\OneToOne(targetEntity: Cidade::class)]
+    #[ORM\JoinColumn(name: "cidade_id")]
     private $cidade;
 
     public function getLogradouro()
