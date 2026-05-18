@@ -7,13 +7,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: "tb_endereco")]
 class Endereco extends GenericModel {
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private $logradouro;
 
-    #[ORM\Column(type: 'string', length: 6)]
+    #[ORM\Column(type: 'string', length: 6, nullable: true)]
     private $numero;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private $bairro;
 
     #[ORM\OneToOne(targetEntity: Cidade::class)]
