@@ -5,6 +5,7 @@ namespace controller;
 use DateTime;
 use Exception;
 use dao\ClienteDAO;
+use dao\CidadeDAO;
 use model\Cliente;
 
 class ClienteController
@@ -13,6 +14,7 @@ class ClienteController
     public function novo()
     {
         $cliente = new Cliente();
+        $cidades = CidadeDAO::listar();
         require __DIR__ . "/../view/cadastro-cliente.php";
     }
 
