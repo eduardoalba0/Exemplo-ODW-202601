@@ -6,6 +6,8 @@ use DateTime;
 use Exception;
 use dao\ClienteDAO;
 use dao\CidadeDAO;
+use model\Cidade;
+use model\Endereco;
 use model\Cliente;
 
 class ClienteController
@@ -13,9 +15,15 @@ class ClienteController
 
     public function novo()
     {
-        $cliente = new Cliente();
-        $cidades = CidadeDAO::listar();
-        require __DIR__ . "/../view/cadastro-cliente.php";
+        try {
+            $cliente = new Cliente();
+            // Inserimos uma lista que vai preencher o Seect de Cidades
+            $cidades = CidadeDAO::listar();
+            require __DIR__ . "/../view/cadastro-cliente.php";
+        } catch (Exception $ex) {
+            echo 'Falha na listagem das cidades.' . $ex->getMessage();
+            header("Location: " . BASE_URL . '/clientes');
+        }
     }
 
     public function cadastrar()
@@ -26,12 +34,32 @@ class ClienteController
             $cpf = filter_input(INPUT_POST, "cpf", FILTER_SANITIZE_SPECIAL_CHARS);
             $data_nascimento = filter_input(INPUT_POST, "data_nascimento", FILTER_SANITIZE_SPECIAL_CHARS);
 
+            $cidade_id = filter_input(INPUT_POST, "cidade_id", FILTER_SANITIZE_NUMBER_INT);
+
             $cliente = $id ? ClienteDAO::buscarId($id) : new Cliente();
-            if(empty($cliente))
+            if (empty($cliente))
                 throw new Exception("Cliente não encontrado.");
+
+            // Se a cidade existe, salva ela na variável
+            // Se a cidade não existe, salva null na variável
+            $cidade = $cidade_id ? CidadeDAO::buscarId($cidade_id) : null;
+            if(empty($cidade) || $cidade === null)
+                throw new Exception("Cidade não encontrada.");
+
+            // Verificamos se o cliente possui endereço.
+            // Se tiver, ele salva na variáve
+            // Se não tiver, cria um novo endereço e salva na variável
+            $endereco = $cliente->getEndereco() ?? new Endereco();
+
+            $endereco->setCidade($cidade);
+
             $cliente->setNome($nome);
             $cliente->setCpf($cpf);
             $cliente->setDataNascimento(new DateTime($data_nascimento));
+
+            $cliente->setEndereco($endereco);
+
+
             ClienteDAO::salvar($cliente);
             header('Location:' . BASE_URL . '/clientes');
         } catch (Exception $ex) {
@@ -51,6 +79,7 @@ class ClienteController
             if (empty($cliente)) {
                 throw new Exception("Cliente não encontrado");
             }
+            $cidades = CidadeDAO::listar();
         } catch (Exception $ex) {
             echo "Falha ao buscar cliente" . $ex->getMessage();
         } finally {
