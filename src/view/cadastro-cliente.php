@@ -47,7 +47,10 @@
             <select id="cidade_id" name="cidade_id" class="form-control">
                 <option value="">Selecione uma cidade</option>
                 <?php foreach ($cidades as $cidade) : ?>
-                    <option value="<?= $cidade->getId() ?>"><?= $cidade->getNome() ?></option>
+                    <option value="<?= $cidade->getId() ?>"
+                    <?= $cidade->getId() == $cliente?->getEndereco()?->getCidade()?->getId()
+                    ? 'selected' : ""?>
+                    ><?= $cidade->getNome() ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

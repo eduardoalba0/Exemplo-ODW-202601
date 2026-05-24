@@ -58,10 +58,10 @@ class ClienteController
             $cliente->setDataNascimento(new DateTime($data_nascimento));
 
             $cliente->setEndereco($endereco);
-
-
             ClienteDAO::salvar($cliente);
+
             header('Location:' . BASE_URL . '/clientes');
+
         } catch (Exception $ex) {
             echo 'Falha ao salvar cliente.' . $ex->getMessage();
             header('Location:' . BASE_URL . '/clientes/novo');
