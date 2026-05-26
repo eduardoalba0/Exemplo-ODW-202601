@@ -9,6 +9,7 @@ use dao\CidadeDAO;
 use model\Cidade;
 use model\Endereco;
 use model\Cliente;
+use utils\FileUpload;
 
 class ClienteController
 {
@@ -58,6 +59,15 @@ class ClienteController
             $cliente->setDataNascimento(new DateTime($data_nascimento));
 
             $cliente->setEndereco($endereco);
+
+            $uploadResult = FileUpload::uploadImagem(
+                "clientes",
+                $_FILES["imagem_cliente"]["tmp_name"],
+                uniqid("imagem_do_cliente_") // imagem_do_cliente_XXXX
+            );
+
+            $cliente->setUrlFotoPerfil($uploadResult['secure_url']);
+
             ClienteDAO::salvar($cliente);
 
             header('Location:' . BASE_URL . '/clientes');

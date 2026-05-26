@@ -18,6 +18,9 @@ class Cliente extends GenericModel
     #[ORM\Column(type: 'date')] // o date só guarda a data. Se quer a hora também, deve usar o datetime
     private $dataNascimento;
 
+    #[ORM\Column(type: 'string', nullable: true)]
+    private $urlFotoPerfil;
+
     // OneToOne referencia um relacionamento um-para-um
     // Neste caso, um cliente vai ter um endereço. Neste tipo de relacionamento você pode escolher quem vai guardar a chave estrangeira
     // targetEntity representa o "tipo de dado" deste campo, que no caso é a classe Endereço relacionada
@@ -74,6 +77,16 @@ class Cliente extends GenericModel
         $this->dataNascimento = $dataNascimento;
     }
 
+    public function getUrlFotoPerfil()
+    {
+        return $this->urlFotoPerfil;
+    }
+
+    public function setUrlFotoPerfil($urlFotoPerfil): void
+    {
+        $this->urlFotoPerfil = $urlFotoPerfil;
+    }
+
     public function getEndereco()
     {
         return $this->endereco;
@@ -93,6 +106,5 @@ class Cliente extends GenericModel
     {
         $this->contatos = $contatos;
     }
-
 
 }

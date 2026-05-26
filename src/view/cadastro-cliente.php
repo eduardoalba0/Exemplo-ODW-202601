@@ -18,7 +18,10 @@
     <!-- o method indica o tipo da requisição (se GET ou POST) -->
     <!-- Usamos formulários quando queremos capturar dados do usuário para algo -->
     <!-- e usar eles para alguma operação do sistema -->
-    <form id="formCadastroCliente" action="<?= BASE_URL . '/clientes/cadastrar' ?>" method="POST">
+    <form id="formCadastroCliente" action="<?= BASE_URL . '/clientes/cadastrar' ?>"
+          method="POST"
+          enctype="multipart/form-data"
+    >
         <input type="hidden" name="id" value="<?= htmlspecialchars($cliente->getId() ?? '') ?>">
         <!-- O label é um texto que aparece e indica o que será inserido -->
         <!-- No seu atributo 'for', colocamos o ID do campo que ele é label  -->
@@ -48,11 +51,17 @@
                 <option value="">Selecione uma cidade</option>
                 <?php foreach ($cidades as $cidade) : ?>
                     <option value="<?= $cidade->getId() ?>"
-                    <?= $cidade->getId() == $cliente?->getEndereco()?->getCidade()?->getId()
-                    ? 'selected' : ""?>
+                            <?= $cidade->getId() == $cliente?->getEndereco()?->getCidade()?->getId()
+                                    ? 'selected' : "" ?>
                     ><?= $cidade->getNome() ?></option>
                 <?php endforeach; ?>
             </select>
+        </div>
+        <div class="row">
+            <label for="imagem_cliente" class="form-label">Foto</label>
+            <input id="imagem_cliente" name="imagem_cliente"
+                   type="file" class="form-control"
+            >
         </div>
 
         <!-- O botão "Submit" vai encaminhar o formulário para o ation correspondente -->
