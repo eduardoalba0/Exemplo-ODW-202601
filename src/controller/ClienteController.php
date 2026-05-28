@@ -48,7 +48,7 @@ class ClienteController
                 throw new Exception("Cidade não encontrada.");
 
             // Verificamos se o cliente possui endereço.
-            // Se tiver, ele salva na variáve
+            // Se tiver, ele salva na variável
             // Se não tiver, cria um novo endereço e salva na variável
             $endereco = $cliente->getEndereco() ?? new Endereco();
 
