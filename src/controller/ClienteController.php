@@ -60,21 +60,36 @@ class ClienteController
 
             $cliente->setEndereco($endereco);
 
-            $uploadResult = FileUpload::uploadImagem(
-                "clientes",
-                $_FILES["imagem_cliente"]["tmp_name"],
-                uniqid("imagem_do_cliente_") // imagem_do_cliente_XXXX
-            );
+            // Se está sendo inserida uma imagem
+            if(!empty($_FILES["imagem_cliente"]["tmp_name"])) {
+                if (!empty($cliente->getUrlFotoPerfil())){
+                    $imagemAntiga = $cliente->getUrlFotoPerfil();
+                }
+                $uploadResult = FileUpload::uploadImagem(
+                    "clientes",
+                    $_FILES["imagem_cliente"]["tmp_name"],
+                    uniqid("imagem_do_cliente_") // imagem_do_cliente_XXXX
+                );
+                $cliente->setUrlFotoPerfil($uploadResult['secure_url']);
+            }
 
-            $cliente->setUrlFotoPerfil($uploadResult['secure_url']);
 
             ClienteDAO::salvar($cliente);
+
+            if(!empty($imagemAntiga)){
+                FileUpload::deletarImagem("clientes", $imagemAntiga);
+            }
 
             header('Location:' . BASE_URL . '/clientes');
 
         } catch (Exception $ex) {
+            // Se eu tenho um URL da imagem, é porque ela foi salva
+            // Se ela foi salva, mas aconteceu um erro
+            if (!empty($uploadResult['secure_url'])){
+                FileUpload::deletarImagem("clientes", $uploadResult['secure_url']);
+            }
             echo 'Falha ao salvar cliente.' . $ex->getMessage();
-            header('Location:' . BASE_URL . '/clientes/novo');
+//            header('Location:' . BASE_URL . '/clientes/novo');
         } finally {
             exit;
         }
@@ -132,7 +147,13 @@ class ClienteController
             if (empty($cliente)) {
                 throw new Exception("Cliente não encontrado.");
             }
+
             ClienteDAO::deletar($cliente);
+
+            if(!empty($cliente->getUrlFotoPerfil())){
+                FileUpload::deletarImagem("clientes", $cliente->getUrlFotoPerfil());
+            }
+
         } catch (Exception $ex) {
             echo "Falha ao remover cliente" . $ex->getMessage();
         } finally {

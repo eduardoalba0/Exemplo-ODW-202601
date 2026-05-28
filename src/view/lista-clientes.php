@@ -28,6 +28,7 @@ $rota_clientes = BASE_URL . "/clientes";
         <thead>
         <tr class="table-dark">
             <th>#</th>
+            <th>Imagem</th>
             <th>Nome</th>
             <th>CPF</th>
             <th>Opções</th>
@@ -37,6 +38,17 @@ $rota_clientes = BASE_URL . "/clientes";
         <?php foreach ($clientes as $cliente) : ?>
             <tr>
                 <td><?= $cliente->getId() ?></td>
+                <td>
+                    <?php if (!empty($cliente->getUrlFotoPerfil())) : ?>
+                    <img src="<?= $cliente->getUrlFotoPerfil() ?>"
+                         class="img-foto-tabela rounded-circle border border-3 border-primary"
+                         alt="<?= 'Imagem do Cliente ' . $cliente->getNome() ?>">
+                    <?php else : ?>
+                    <div class="border border-3 border-primary rounded-circle img-foto-tabela d-flex align-items-center justify-content-center">
+                        <i class="bi bi-person-fill text-primary"></i>
+                    </div>
+                    <?php endif; ?>
+                </td>
                 <td><?= htmlspecialchars($cliente->getNome()) ?></td>
                 <td><?= $cliente->getCpf() ?></td>
                 <td>
