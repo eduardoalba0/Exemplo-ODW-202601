@@ -84,12 +84,12 @@ class ClienteController
 
         } catch (Exception $ex) {
             // Se eu tenho um URL da imagem, é porque ela foi salva
-            // Se ela foi salva, mas aconteceu um erro
+            // Se ela foi salva, mas aconteceu um erro, eu preciso apagá-la.
             if (!empty($uploadResult['secure_url'])){
                 FileUpload::deletarImagem("clientes", $uploadResult['secure_url']);
             }
             echo 'Falha ao salvar cliente.' . $ex->getMessage();
-//            header('Location:' . BASE_URL . '/clientes/novo');
+            header('Location:' . BASE_URL . '/clientes/novo');
         } finally {
             exit;
         }
