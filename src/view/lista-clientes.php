@@ -20,11 +20,11 @@ $rota_clientes = BASE_URL . "/clientes";
             <h1>Listagem de Clientes</h1>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-12 text-end">
-            <a class="0btn btn-primary" href="<?= BASE_URL . '/clientes/novo' ?>">Cadastrar Cliente</a>
+            <a class="btn btn-primary" href="<?= BASE_URL . '/clientes/novo' ?>">Cadastrar Cliente</a>
         </div>
     </div>
 
-    <table class="table table-striped mt-3">
+    <table id="tabela_clientes" class="table table-striped mt-3">
         <thead>
         <tr class="table-dark">
             <th>#</th>
@@ -59,7 +59,8 @@ $rota_clientes = BASE_URL . "/clientes";
                     <a class="btn btn-outline-secondary" href='<?= $rota_clientes . '/' . $cliente->getId() ?>'>
                         <i class="bi bi-eye-fill"></i>
                     </a>
-                    <form action='<?= $rota_clientes . '/' . $cliente->getId() . '/remover' ?>' method='POST'>
+                    <form onsubmit="confirmarRemocao('Deseja remover o Cliente <?= htmlspecialchars($cliente->getNome()) ?>?', event)"
+                            action='<?= $rota_clientes . '/' . $cliente->getId() . '/remover' ?>' method='POST'>
                         <button class="btn btn-outline-danger" type='submit'>
                             <i class="bi bi-trash2-fill"></i>
                         </button>

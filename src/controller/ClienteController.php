@@ -22,7 +22,8 @@ class ClienteController
             $cidades = CidadeDAO::listar();
             require __DIR__ . "/../view/cadastro-cliente.php";
         } catch (Exception $ex) {
-            echo 'Falha na listagem das cidades.' . $ex->getMessage();
+            $_SESSION["mensagem_erro"] = 'Falha na listagem das cidades.';
+            $_SESSION["mensagem_erro_detalhada"] = $ex->getMessage();
             header("Location: " . BASE_URL . '/clientes');
         }
     }
@@ -81,14 +82,15 @@ class ClienteController
             }
 
             header('Location:' . BASE_URL . '/clientes');
-
+            $_SESSION["mensagem_sucesso"] = "Cliente salvo com sucesso.";
         } catch (Exception $ex) {
             // Se eu tenho um URL da imagem, é porque ela foi salva
             // Se ela foi salva, mas aconteceu um erro, eu preciso apagá-la.
             if (!empty($uploadResult['secure_url'])){
                 FileUpload::deletarImagem("clientes", $uploadResult['secure_url']);
             }
-            echo 'Falha ao salvar cliente.' . $ex->getMessage();
+            $_SESSION["mensagem_erro"] = 'Falha ao salvar cliente.';
+            $_SESSION["mensagem_erro_detalhada"] = $ex->getMessage();
             header('Location:' . BASE_URL . '/clientes/novo');
         } finally {
             exit;
@@ -153,9 +155,10 @@ class ClienteController
             if(!empty($cliente->getUrlFotoPerfil())){
                 FileUpload::deletarImagem("clientes", $cliente->getUrlFotoPerfil());
             }
-
+            $_SESSION["mensagem_sucesso"] = "Cliente removido com sucesso.";
         } catch (Exception $ex) {
-            echo "Falha ao remover cliente" . $ex->getMessage();
+            $_SESSION["mensagem_erro"] = 'Falha ao remover cliente.';
+            $_SESSION["mensagem_erro_detalhada"] = $ex->getMessage();
         } finally {
             header('Location: ' . BASE_URL . '/clientes');
             exit;

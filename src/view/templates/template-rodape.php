@@ -12,5 +12,28 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 <!-- Importação do jQuery Mask -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<!-- Importação do DataTables -->
+<script src="https://cdn.datatables.net/2.3.8/js/dataTables.min.js"></script>
+<!-- Importaçao do SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Importação do arquivo main.js -->
 <script src="<?= BASE_URL . '/assets/js/main.js' ?>"></script>
+
+<?php if (!empty($_SESSION["mensagem_erro"])) : ?>
+<script>mensagemErro('<?= $_SESSION["mensagem_erro"] ?>')</script>
+<?php unset($_SESSION["mensagem_erro"]); ?>
+<?php elseif (!empty($_SESSION["mensagem_sucesso"])) : ?>
+<script>mensagemSucesso('<?= $_SESSION["mensagem_sucesso"] ?>')</script>
+<?php unset($_SESSION["mensagem_sucesso"]); ?>
+<?php endif; ?>
+
+
+
+
+
+
+
+
+
+
+
