@@ -2,6 +2,7 @@
 
 namespace utils;
 
+use PDO;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
@@ -27,6 +28,10 @@ class Conexao {
                 'dbname' => $_ENV['DB_NAME'],
                 'user' => $_ENV['DB_USER'],
                 'password' => $_ENV['DB_PASSWORD'],
+                'driverOptions' => [
+                    PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+                    PDO::MYSQL_ATTR_SSL_CA => true // Aciona o envio do certificado SSL
+                ],
             ], $config);
 
             self::$entityManager = new EntityManager($connection, $config);
