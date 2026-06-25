@@ -16,11 +16,8 @@ class Conexao {
         if (self::$entityManager === null) {
             $config = ORMSetup::createAttributeMetadataConfiguration(
                 paths: [realpath(__DIR__ . '/../model')], // lugar onde estão as classes a serem mapeadas
-                isDevMode: true, // altera a forma do cache de acordo com o ambiente (produção/desenvolvimento). Trocar pra false quando por no servidor real
+                isDevMode: false, // altera a forma do cache de acordo com o ambiente (produção/desenvolvimento). Trocar pra false quando por no servidor real
             );
-            // Estas duas linhas seguintes servem apenas para ler o .env
-            $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
-            $dotenv->load();
 
             // Configuramos a conexão com o banco
             $connection = DriverManager::getConnection([
