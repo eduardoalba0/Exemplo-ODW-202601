@@ -4,8 +4,6 @@ namespace utils;
 
 // Importação do SDK do Cloudinary
 use Cloudinary\Cloudinary;
-// Importação do DotEnv. Acesso ao arquivo .env
-use Dotenv\Dotenv;
 // Importa a classe de Exceptions pra tratamento de excessões
 use Exception;
 
@@ -18,10 +16,6 @@ class FileUpload
         // Verifica se o storage foi definido
         // Se não foi, ele cria uma nova "conexão" com o Cloudinary
         if (self::$storage === null) {
-            // Carrega as variáveis de ambiente do arquivo .env
-            $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2));
-            $dotenv->load();
-
             // Cria uma instância do Cloudinary
             // Através da URL de conexão presente no arquivo .env
             self::$storage = new Cloudinary($_ENV['CLOUDINARY_URL']);
